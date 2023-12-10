@@ -32,13 +32,15 @@ public static Map<String,BigDecimal> averageBuyPrice(List<Trade> tradeList){
         Long quantity= trade.getQuantity();
         BigDecimal price=trade.getPrice();
         if (trade.getType()==TradeType.buy){
-            buyTotalPriceMap.put(code,buyTotalPriceMap.getOrDefault(code,BigDecimal.ZERO).add(price.multiply(BigDecimal.valueOf(quantity))));
+            buyTotalPriceMap.put(code,buyTotalPriceMap.getOrDefault(
+                code,BigDecimal.ZERO).add(price.multiply(BigDecimal.valueOf(quantity))));
             buyQuantityMap.put(code, buyQuantityMap.getOrDefault(code,0L)+quantity);
         }
     }
     for (Trade trade:tradeList){
         String code= trade.getCode();
-        averageBuyPriceMap.put(code,buyTotalPriceMap.get(code).divide(BigDecimal.valueOf(buyQuantityMap.get(code)),2,BigDecimal.ROUND_HALF_DOWN));
+        averageBuyPriceMap.put(code,buyTotalPriceMap.get(code).divide(
+            BigDecimal.valueOf(buyQuantityMap.get(code)),2,BigDecimal.ROUND_HALF_DOWN));
     }
     return averageBuyPriceMap;
 }
